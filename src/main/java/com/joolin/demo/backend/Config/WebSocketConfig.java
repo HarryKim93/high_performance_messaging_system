@@ -1,4 +1,4 @@
-package com.joolin.demo.Config;
+package com.joolin.demo.backend.Config;
 
 
 import org.springframework.context.annotation.Configuration;

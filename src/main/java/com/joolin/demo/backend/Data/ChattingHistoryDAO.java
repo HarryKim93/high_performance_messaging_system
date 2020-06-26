@@ -1,8 +1,8 @@
-package com.joolin.demo.Data;
+package com.joolin.demo.backend.Data;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import com.joolin.demo.model.ChattingMessage;
+import com.joolin.demo.backend.model.ChattingMessage;
 import org.springframework.stereotype.Component;
 
 import java.util.Comparator;

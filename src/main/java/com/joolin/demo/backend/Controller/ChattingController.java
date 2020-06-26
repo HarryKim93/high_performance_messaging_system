@@ -1,9 +1,9 @@
-package com.joolin.demo.Controller;
+package com.joolin.demo.backend.Controller;
 
-import com.joolin.demo.Data.ChattingHistoryDAO;
-import com.joolin.demo.Receiver;
-import com.joolin.demo.Sender;
-import com.joolin.demo.model.ChattingMessage;
+import com.joolin.demo.backend.Data.ChattingHistoryDAO;
+import com.joolin.demo.backend.Receiver;
+import com.joolin.demo.backend.Sender;
+import com.joolin.demo.backend.model.ChattingMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;

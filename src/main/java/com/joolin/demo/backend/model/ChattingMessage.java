@@ -1,4 +1,4 @@
-package com.joolin.demo.model;
+package com.joolin.demo.backend.model;
 
 import lombok.Getter;
 import lombok.Setter;

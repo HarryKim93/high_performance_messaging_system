@@ -1,8 +1,7 @@
-package com.joolin.demo.Config;
+package com.joolin.demo.backend.Config;
 
 import com.google.common.collect.ImmutableMap;
-import com.joolin.demo.model.ChattingMessage;
-import org.apache.kafka.clients.producer.Producer;
+import com.joolin.demo.backend.model.ChattingMessage;
 import org.apache.kafka.common.serialization.IntegerSerializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

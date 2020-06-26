@@ -1,7 +1,7 @@
-package com.joolin.demo;
+package com.joolin.demo.backend;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.joolin.demo.model.ChattingMessage;
+import com.joolin.demo.backend.model.ChattingMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
