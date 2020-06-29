@@ -28,7 +28,6 @@ public class ChattingController {
     private static String BOOT_TOPIC="kafka-chatting";
 
     @MessageMapping("/message")
-    @SendTo("/topic/public")
     public void sendMessage(ChattingMessage message) throws Exception{
         message.setTimeStamp(System.currentTimeMillis());
         chattingHistoryDAO.save(message);
