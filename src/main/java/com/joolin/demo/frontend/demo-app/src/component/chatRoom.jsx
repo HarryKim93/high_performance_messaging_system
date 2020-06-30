@@ -61,7 +61,6 @@ class chatRoom extends Component{
                     onDisconnect={ () => { this.setState({ clientConnected: false }) } }
                     debug={ false } style={[{width:'100%', height:'100%'}]}>
                 </SockJsClient>
-
             </div>
         );
     }
