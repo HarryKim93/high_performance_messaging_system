@@ -2,6 +2,8 @@ package com.joolin.demo.backend.Config;
 
 import com.google.common.collect.ImmutableMap;
 import com.joolin.demo.backend.model.ChattingMessage;
+import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.IntegerDeserializer;
 import org.apache.kafka.common.serialization.IntegerSerializer;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -14,30 +16,31 @@ import org.springframework.kafka.core.*;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @EnableKafka
 @Configuration
 public class KafkaConfig {
-    //What is Producer Factory?
-    @Bean
-    public ProducerFactory<String, ChattingMessage> producerFactory(){
-        return new DefaultKafkaProducerFactory<>(producerConfigs(),null, new JsonSerializer<ChattingMessage>());
-    }
-
     @Bean
     public KafkaTemplate<String, ChattingMessage> kafkaTemplate(){
         return new KafkaTemplate<>(producerFactory());
     }
 
     @Bean
-    public Map<String, Object> producerConfigs(){
-        return ImmutableMap.<String, Object>builder()
-                .put("bootstrap.servers", "localhost:9092")
-                .put("key.serializer", StringSerializer.class)
-                .put("value.serializer", JsonSerializer.class)
-                .put("group.id", "kafka-test")
-                .build();
+    public ProducerFactory<String, ChattingMessage> producerFactory() {
+        return new DefaultKafkaProducerFactory<>(producerConfig(), null, new JsonSerializer<ChattingMessage>());
+    }
+
+    @Bean
+    public Map<String, Object> producerConfig(){
+        Map<String, Object> config = new HashMap<>();
+
+        config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+        config.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        config.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+
+        return config;
     }
 
     @Bean
@@ -49,16 +52,17 @@ public class KafkaConfig {
 
     @Bean
     public ConsumerFactory<String, ChattingMessage> consumerFactory(){
-        return new DefaultKafkaConsumerFactory<>(consumerConfig(), null,new JsonDeserializer<>(ChattingMessage.class));
+        return new DefaultKafkaConsumerFactory<>(consumerConfig(), null, new JsonDeserializer<>(ChattingMessage.class));
     }
 
     @Bean
     public Map<String, Object> consumerConfig(){
-        return ImmutableMap.<String, Object> builder()
-                .put("bootstrap.servers", "localhost:9092")
-                .put("key.deserializer", StringDeserializer.class)
-                .put("value.deserializer", JsonDeserializer.class)
-                .put("group.id", "kafka-test")
-                .build();
+        Map<String, Object> config = new HashMap<>();
+
+        config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+        config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
+
+        return config;
     }
 }

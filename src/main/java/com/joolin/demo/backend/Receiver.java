@@ -32,7 +32,7 @@ public class Receiver {
             this.template.convertAndSend("/topic/public", json);
         }
         catch (Exception e) {
-
+            LOGGER.info("This Message is Not Proper to Send");
         }
     }
 }

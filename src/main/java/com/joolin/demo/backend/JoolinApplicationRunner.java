@@ -20,7 +20,7 @@ public class JoolinApplicationRunner implements ApplicationRunner {
     public void run(ApplicationArguments arguments) throws Exception{
 
         ChattingMessage chattingMessage = new ChattingMessage();
-        chattingMessage.setMessage("Hello World!!!");
+        chattingMessage.setMessage("Hello World Too");
         chattingMessage.setTimeStamp(System.currentTimeMillis());
         chattingMessage.setUser("???");
         sender.send("Topic1", chattingMessage);

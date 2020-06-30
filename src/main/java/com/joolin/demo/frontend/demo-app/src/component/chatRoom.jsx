@@ -50,16 +50,21 @@ class chatRoom extends Component{
         const wsSourceUrl = "http://localhost:8080/chatting";
         return (
             <div>
-                <TalkBox topic="/topic/public" currentUserId={this.randomUserId}
-                    currentUser={this.randomUserName} messages={this.state.messages}
-                    onSendMessage={this.sendMessage} connected={this.state.clientConnected}>
+                <TalkBox topic="/topic/public">
+                    currentUserId={this.randomUserId}
+                    currentUser={this.randomUserName}
+                    messages={this.state.messages}
+                    onSendMessage={this.sendMessage}
+                    connected={this.state.clientConnected}
                 </TalkBox>
 
                 <SockJsClient url={wsSourceUrl} topics={["/topic/public"]}>
-                    onMessge={this.onMessageReceive} ref={ (client) => {this.clientRef = client}}
+                    onMessage={this.onMessageReceive}
+                    ref={ (client) => {this.clientRef = client}}
                     onConnect={ () => {this.setState({ clientConnected: true }) } }
                     onDisconnect={ () => { this.setState({ clientConnected: false }) } }
-                    debug={ false } style={[{width:'100%', height:'100%'}]}>
+                    debug={ false }
+                    style={[{width:'100%', height:'120%'}]}>
                 </SockJsClient>
             </div>
         );
