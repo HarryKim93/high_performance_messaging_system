@@ -18,17 +18,21 @@ public class Receiver {
     @Autowired
     private SimpMessagingTemplate template;
 
-    @KafkaListener(id = "kafka-test", topics = "kafka-chatting")
+    @KafkaListener(id = "test-listener", topics = "Topic1")
     public void receive(ChattingMessage message) throws Exception{
-        LOGGER.info("message='{}'", message);
-        HashMap<String, String> msg = new HashMap<>();
-        msg.put("timestamp", Long.toString(message.getTimeStamp()));
-        msg.put("message", message.getMessage());
-        msg.put("author", message.getUser());
+        try {
+            LOGGER.info("message='{}'", message);
+            HashMap<String, String> msg = new HashMap<>();
+            msg.put("timestamp", Long.toString(message.getTimeStamp()));
+            msg.put("message", message.getMessage());
+            msg.put("author", message.getUser());
 
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(msg);
+            ObjectMapper mapper = new ObjectMapper();
+            String json = mapper.writeValueAsString(msg);
+            this.template.convertAndSend("/topic/public", json);
+        }
+        catch (Exception e) {
 
-        this.template.convertAndSend("/topic/public", json);
+        }
     }
 }

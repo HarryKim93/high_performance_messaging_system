@@ -12,10 +12,14 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Component
-public class ChattingHistoryDAO {
+public class ChattingHistory {
     private final Cache<UUID, ChattingMessage> chatHistoryCache = CacheBuilder
             .newBuilder().maximumSize(20).expireAfterWrite(10, TimeUnit.MINUTES)
             .build();
+
+    public void clear(){
+        chatHistoryCache.cleanUp();
+    }
 
     public void save(ChattingMessage chatObj){
         this.chatHistoryCache.put(UUID.randomUUID(), chatObj);

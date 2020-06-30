@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import com.joolin.demo.backend.model.ChattingMessage;
 import org.apache.kafka.common.serialization.IntegerDeserializer;
 import org.apache.kafka.common.serialization.IntegerSerializer;
+import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +22,7 @@ public class KafkaConfig {
     //What is Producer Factory?
     @Bean
     public ProducerFactory<String, ChattingMessage> producerFactory(){
-        return new DefaultKafkaProducerFactory<>(producerConfigs(), null, new JsonSerializer<ChattingMessage>());
+        return new DefaultKafkaProducerFactory<>(producerConfigs(),null, new JsonSerializer<ChattingMessage>());
     }
 
     @Bean
@@ -33,7 +34,7 @@ public class KafkaConfig {
     public Map<String, Object> producerConfigs(){
         return ImmutableMap.<String, Object>builder()
                 .put("bootstrap.servers", "localhost:9092")
-                .put("key.serializer", IntegerSerializer.class)
+                .put("key.serializer", StringSerializer.class)
                 .put("value.serializer", JsonSerializer.class)
                 .put("group.id", "kafka-test")
                 .build();
@@ -48,14 +49,14 @@ public class KafkaConfig {
 
     @Bean
     public ConsumerFactory<String, ChattingMessage> consumerFactory(){
-        return new DefaultKafkaConsumerFactory<>(consumerConfig(), null, new JsonDeserializer<ChattingMessage>());
+        return new DefaultKafkaConsumerFactory<>(consumerConfig(), null,new JsonDeserializer<>(ChattingMessage.class));
     }
 
     @Bean
     public Map<String, Object> consumerConfig(){
         return ImmutableMap.<String, Object> builder()
                 .put("bootstrap.servers", "localhost:9092")
-                .put("key.deserializer", IntegerDeserializer.class)
+                .put("key.deserializer", StringDeserializer.class)
                 .put("value.deserializer", JsonDeserializer.class)
                 .put("group.id", "kafka-test")
                 .build();

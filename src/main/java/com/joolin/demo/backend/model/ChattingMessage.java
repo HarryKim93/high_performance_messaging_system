@@ -4,10 +4,12 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @ToString
-public class ChattingMessage {
+public class ChattingMessage implements Serializable {
     private String message;
     private String user;
     private Long timeStamp;
@@ -16,7 +18,11 @@ public class ChattingMessage {
     private String rawData;
 
     public ChattingMessage(){
-
+        message = "";
+        user = "";
+        timeStamp = System.currentTimeMillis();
+        fileName = "";
+        rawData = "";
     }
 
     public ChattingMessage(String message, String user){

@@ -1,6 +1,6 @@
 package com.joolin.demo.backend.Controller;
 
-import com.joolin.demo.backend.Data.ChattingHistoryDAO;
+import com.joolin.demo.backend.Data.ChattingHistory;
 import com.joolin.demo.backend.Receiver;
 import com.joolin.demo.backend.Sender;
 import com.joolin.demo.backend.model.ChattingMessage;
@@ -23,21 +23,22 @@ public class ChattingController {
     private Receiver receiver;
 
     @Autowired
-    private ChattingHistoryDAO chattingHistoryDAO;
+    private ChattingHistory chattingHistory;
 
-    private static String BOOT_TOPIC="kafka-chatting";
+    private static String BOOT_TOPIC="Topic1";
 
     @MessageMapping("/message")
+    @SendTo("/topic/public")
     public void sendMessage(ChattingMessage message) throws Exception{
         message.setTimeStamp(System.currentTimeMillis());
-        chattingHistoryDAO.save(message);
+        chattingHistory.save(message);
         sender.send(BOOT_TOPIC, message);
     }
 
     @RequestMapping("/history")
     public List<ChattingMessage> getChattingHistory() throws Exception{
         System.out.println("History:\n");
-        return chattingHistoryDAO.get();
+        return chattingHistory.get();
     }
 
     @MessageMapping("/file")
