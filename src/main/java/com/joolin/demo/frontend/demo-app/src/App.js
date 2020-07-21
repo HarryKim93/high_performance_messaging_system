@@ -53,7 +53,7 @@ class App extends React.Component {
         const wsSourceUrl = "http://localhost:8080/chatting";
         return (
             <div>
-                <TalkBox topic="/topic/public" currentUserId={ this.randomUserId }
+                <TalkBox topic="Test for /topic/public" currentUserId={ this.randomUserId }
                          currentUser={ this.randomUserName } messages={ this.state.messages }
                          onSendMessage={ this.sendMessage } connected={ this.state.clientConnected }/>
 

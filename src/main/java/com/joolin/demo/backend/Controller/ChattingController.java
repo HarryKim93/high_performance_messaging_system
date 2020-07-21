@@ -25,14 +25,14 @@ public class ChattingController {
     @Autowired
     private ChattingHistory chattingHistory;
 
-    private static String BOOT_TOPIC="Topic1";
+    private static String TEST_TOPIC="Topic1";
 
     @MessageMapping("/message")
     @SendTo("/topic/public")
     public void sendMessage(ChattingMessage message) throws Exception{
         message.setTimeStamp(System.currentTimeMillis());
         chattingHistory.save(message);
-        sender.send(BOOT_TOPIC, message);
+        sender.send(TEST_TOPIC, message);
     }
 
     @RequestMapping("/history")

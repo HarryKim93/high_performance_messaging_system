@@ -14,3 +14,29 @@ services:
       KAFKA_CREATE_TOPICS: "Topic1:1:1"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+
+  #  docker run -p 6379:6379 --name redis_boot -d redis
+  #  docker exec -i -t redis_boot redis-cli
+  #
+  #  keys *
+  #  get {key}
+  #  hgetall {key}
+  #  hget {key} {column}
+
+  postgresql:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: pass
+      POSTGRES_USER: hyunwoo
+      POSTGRES_DB: messages
+
+#  spring.datasource.hikari.*
+#  spring.datasource.tomcat.*
+#  spring.datasource.dbcp2.*

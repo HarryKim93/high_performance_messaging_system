@@ -1,8 +1,11 @@
 package com.joolin.demo.backend.Data;
 
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
 import com.joolin.demo.backend.model.ChattingMessage;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisHash;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
 
 import java.util.Comparator;
@@ -13,21 +16,32 @@ import java.util.stream.Collectors;
 
 @Component
 public class ChattingHistory {
-    private final Cache<UUID, ChattingMessage> chatHistoryCache = CacheBuilder
-            .newBuilder().maximumSize(20).expireAfterWrite(10, TimeUnit.MINUTES)
-            .build();
+    @Autowired
+    StringRedisTemplate redisTemplate;
 
-    public void clear(){
-        chatHistoryCache.cleanUp();
-    }
+    @Autowired
+    ChattingHistoryRepository chattingHistoryRepository;
 
     public void save(ChattingMessage chatObj){
-        this.chatHistoryCache.put(UUID.randomUUID(), chatObj);
+        this.chattingHistoryRepository.save(chatObj);
     }
 
-    public List<ChattingMessage> get(){
-        return chatHistoryCache.asMap().values().stream()
-                .sorted(Comparator.comparing(ChattingMessage::getTimeStamp))
-                .collect(Collectors.toList());
+    public void clear(){
+        this.chattingHistoryRepository.deleteAll();
     }
+
+//    public List<ChattingMessage> get() {
+//        return chattingHistoryRepository.findAll().forEach();
+//    }
+
+
+//    private final Cache<UUID, ChattingMessage> chatHistoryCache = CacheBuilder
+//            .newBuilder().maximumSize(20).expireAfterWrite(10, TimeUnit.MINUTES)
+//            .build();
+//
+//    public List<ChattingMessage> get(){
+//        return chatHistoryCache.asMap().values().stream()
+//                .sorted(Comparator.comparing(ChattingMessage::getTimeStamp))
+//                .collect(Collectors.toList());
+//    }
 }
