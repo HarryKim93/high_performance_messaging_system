@@ -1,6 +1,5 @@
 package com.joolin.demo.backend.Config;
 
-import com.google.common.collect.ImmutableMap;
 import com.joolin.demo.backend.model.ChattingMessage;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;

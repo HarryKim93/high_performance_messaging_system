@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -36,7 +37,7 @@ public class ChattingController {
     }
 
     @RequestMapping("/history")
-    public List<ChattingMessage> getChattingHistory() throws Exception{
+    public ArrayList<ChattingMessage> getChattingHistory() throws Exception{
         System.out.println("History:\n");
         return chattingHistory.get();
     }

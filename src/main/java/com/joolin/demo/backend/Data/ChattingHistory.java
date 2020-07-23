@@ -8,9 +8,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -28,6 +26,17 @@ public class ChattingHistory {
 
     public void clear(){
         this.chattingHistoryRepository.deleteAll();
+    }
+
+    public ArrayList<ChattingMessage> get() {
+        ArrayList<ChattingMessage> chattingMessages = new ArrayList<ChattingMessage>();
+
+        Iterator<ChattingMessage> iterator = chattingHistoryRepository.findAll().iterator();
+        while (iterator.hasNext()) {
+            chattingMessages.add(iterator.next());
+        }
+
+        return chattingMessages;
     }
 
 //    public List<ChattingMessage> get() {
