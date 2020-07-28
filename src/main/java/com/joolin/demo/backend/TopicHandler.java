@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 
 @Service
-public class Receiver {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Receiver.class);
+public class TopicHandler {
+    private static final Logger LOGGER = LoggerFactory.getLogger(TopicHandler.class);
 
     @Autowired
     private SimpMessagingTemplate template;

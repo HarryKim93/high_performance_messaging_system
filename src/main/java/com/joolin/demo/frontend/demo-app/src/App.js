@@ -12,7 +12,6 @@ class App extends React.Component {
         super(props);
         this.randomUserName = UsernameGenerator.generateUsername("-");
         this.randomUserId = randomstring.generate();
-        this.sendURL = "/message";
         this.state = {
             clientConnected : false,
             messages : []
@@ -21,7 +20,6 @@ class App extends React.Component {
     }
 
     onMessageReceive = (msg, topic) => {
-        //alert(JSON.stringify(msg) + " @ " +  JSON.stringify(this.state.messages)+" @ " + JSON.stringify(topic));
         this.setState(prevState => ({
             messages: [...prevState.messages, msg]
         }));
@@ -34,6 +32,7 @@ class App extends React.Component {
                 "message" : selfMsg.message
             }
             this.clientRef.sendMessage("/app/message", JSON.stringify(send_message));
+            //clientRef -> SockJS를 내부에 들고있는 Client
             return true;
         } catch(e) {
             return false;
@@ -53,12 +52,17 @@ class App extends React.Component {
         const wsSourceUrl = "http://localhost:8080/chatting";
         return (
             <div>
-                <TalkBox topic="Test for /topic/public" currentUserId={ this.randomUserId }
-                         currentUser={ this.randomUserName } messages={ this.state.messages }
-                         onSendMessage={ this.sendMessage } connected={ this.state.clientConnected }/>
+                <TalkBox topic="Test for /topic/public"
+                         currentUserId={ this.randomUserId }
+                         currentUser={ this.randomUserName }
+                         messages={ this.state.messages }
+                         onSendMessage={ this.sendMessage }
+                         connected={ this.state.clientConnected }/>
 
-                <SockJsClient url={ wsSourceUrl } topics={["/topic/public"]}
-                              onMessage={ this.onMessageReceive } ref={ (client) => { this.clientRef = client }}
+                <SockJsClient url={ wsSourceUrl }
+                              topics={["/topic/public"]}
+                              onMessage={ this.onMessageReceive }
+                              ref={ (client) => { this.clientRef = client }}
                               onConnect={ () => {this.setState({ clientConnected: true }) } }
                               onDisconnect={ () => { this.setState({ clientConnected: false }) } }
                               debug={ false } style={[{width:'100%', height:'100%'}]}/>
